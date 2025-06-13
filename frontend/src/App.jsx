@@ -8,7 +8,7 @@ import LandingPage from './pages/LandingPage'
 import InterviewPrep from './pages/InterviewPrep/InterviewPrep'
 const App = () => {
   return (
-    <div>
+    <div className=''>
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<LandingPage/>} />
