@@ -2,8 +2,12 @@ import React, { useState } from 'react'
 import HERO_IMG from '../assets/HERO_IMG.png'
 import {APP_FEATURES} from '../utils/data'
 import { useNavigate } from 'react-router'
-import { FaMoneyCheckDollar, FaWandMagicSparkles } from "react-icons/fa6";
+import { FaWandMagicSparkles } from "react-icons/fa6";
+import Modal from '../components/Modal';
+import Login from './auth/Login';
+import Signup from './auth/Signup';
 const LandingPage = () => {
+  
   const navigate = useNavigate();
 
   const [openAuth,setOpenAuth] = useState(false);
@@ -112,7 +116,7 @@ const LandingPage = () => {
           <Login setCurrPage={setCurrPage} />
         ) }
         {currPage === 'signup' && (
-          <SignUp setCurrPage={setCurrPage} />
+          <Signup setCurrPage={setCurrPage} />
         )}
       </div>
     </Modal>
