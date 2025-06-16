@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router';
 import Input from '../../components/inputs/Input';
+import validator from 'validator'
 
 const Login = ({setCurrPage}) => {
   
@@ -12,7 +13,24 @@ const Login = ({setCurrPage}) => {
 
   const handleLogin = async(e)=>{
     e.preventDefault();
+
+    if(!validator.isEmail(email)){
+      setError("Please enter a valid email address!");
+      return;
+    }
+
+    if(!validator.isStrongPassword(password,{ minLength: 6, minLowercase: 1, minUppercase: 1, minNumbers: 1, minSymbols: 1})){
+      setError("Password must be at least 6 characters long, and must contain at least one lowercase, uppercase, number and symbols.");
+      return;
+    }
+
+    setError("");
+
+    //api fetching
+    
   }
+
+
   return (
     <div className='w-[90vw] md:w-[33vw] p-7 flex flex-col justify-center'>
       <h3 className='text-lg font-semibold text-black'>Welcome Back</h3>
