@@ -14,13 +14,13 @@ const Login = ({setCurrPage}) => {
   const handleLogin = async(e)=>{
     e.preventDefault();
 
-    if(!validator.isEmail(email)){
+    if(!validator.isEmail(email) || validator.isEmpty(email)){
       setError("Please enter a valid email address!");
       return;
     }
 
-    if(!validator.isStrongPassword(password,{ minLength: 6, minLowercase: 1, minUppercase: 1, minNumbers: 1, minSymbols: 1})){
-      setError("Password must be at least 6 characters long, and must contain at least one lowercase, uppercase, number and symbols.");
+    if(validator.isEmpty(password,{ignore_whitespace:false}) ){
+      setError("Please enter a valid password!");
       return;
     }
 

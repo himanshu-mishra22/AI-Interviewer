@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router';
 import Input from '../../components/inputs/Input';
 import ProfilePicSelector from '../../components/inputs/ProfilePicSelector';
+import validator from 'validator'
 
 const Signup = ({setCurrPage}) => {
   const [profilePic,setProfilePic] = useState(null);
@@ -14,6 +15,18 @@ const Signup = ({setCurrPage}) => {
 
   const handleSignup =(e) => {
     e.preventDefault();
+
+    if(!validator.isEmail(email) || validator.isEmpty(email,{ignore_whitespace:false})){
+      setError("Invalid Email!");
+    }
+    if(validator.isEmpty(name,{ignore_whitespace:false})){
+      setError("Please enter a valid name!");
+    }
+
+    if(validator.isEmpty(password,{ignore_whitespace:false}) || !validator.isStrongPassword(password,{ minLength: 8, minLowercase: 1, minUppercase: 1, minNumbers: 1, minSymbols: 1})){
+      setError("Please enter a valid or more strong password!")
+    }
+
   }
 
   return (
