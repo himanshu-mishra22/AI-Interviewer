@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
+const connectDB = require('./config/db');
 
 const app = express();
 
@@ -14,8 +15,16 @@ app.use(
 );
 
 app.use(express.json());
+connectDB();
 
 //routes
+app.use("/api/auth",authRoutes);
+// app.use("/api/questions",questionRoutes);
+// app.use("/api/sessions",sessionRoutes);
+
+// app.use("/api/ai/generate-questions",protect,generateInterviewQuestions);
+// app.use("/api/ai/generate-explanations",protect,generateExplanation);
+
 
 
 //serve uploads folder 
