@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router';
 import Input from '../../components/inputs/Input';
 import validator from 'validator'
+import axiosInstance from '../../utils/axiosInstance';
+import { API_PATHS } from '../../utils/apiPaths';
 
 const Login = ({setCurrPage}) => {
   
@@ -27,6 +29,23 @@ const Login = ({setCurrPage}) => {
     setError("");
 
     //api fetching
+    try {
+      const response = await axiosInstance.post(API_PATHS.AUTH.LOGIN,{
+        email,password
+      });
+
+      const {token} = response.data;
+      if(token){
+        localStorage.setItem("token", token);
+        navigate("/dashboard");
+      }
+    } catch (error) {
+      if(error.response && error.response.data.message){
+        setError(error.response.data.message);
+      }else{
+        setError("Something went wrong");
+      }
+    }
     
   }
 
