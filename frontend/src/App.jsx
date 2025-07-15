@@ -6,9 +6,11 @@ import Signup from './pages/auth/Signup'
 import Dashboard from './pages/home/Dashboard'
 import LandingPage from './pages/LandingPage'
 import InterviewPrep from './pages/InterviewPrep/InterviewPrep'
+import UserProvider from './context/userContext'
 const App = () => {
   return (
-    <div className=''>
+    <UserProvider>
+      <div className=''>
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<LandingPage/>} />
@@ -26,6 +28,7 @@ const App = () => {
         }}
         />
     </div>
+    </UserProvider>
   )
 }
 
