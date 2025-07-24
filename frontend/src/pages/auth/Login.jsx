@@ -1,30 +1,29 @@
-import React, { useContext, useState } from 'react'
-import { useNavigate } from 'react-router';
-import Input from '../../components/inputs/Input';
-import validator from 'validator'
-import axiosInstance from '../../utils/axiosInstance';
-import { API_PATHS } from '../../utils/apiPaths';
-import { userContext } from '../../context/userContext';
+import React, { useContext, useState } from "react";
+import { useNavigate } from "react-router";
+import Input from "../../components/inputs/Input";
+import validator from "validator";
+import axiosInstance from "../../utils/axiosInstance";
+import { API_PATHS } from "../../utils/apiPaths";
+import { userContext } from "../../context/userContext";
 
-const Login = ({setCurrPage}) => {
-  
-  const [email,setEmail] = useState("");
-  const [password,setPassword] = useState("");
-  const [error,setError] = useState(null);
+const Login = ({ setCurrPage }) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
 
-  const {updateUser} = useContext(userContext);
+  const { updateUser } = useContext(userContext);
 
   const navigate = useNavigate();
 
-  const handleLogin = async(e)=>{
+  const handleLogin = async (e) => {
     e.preventDefault();
 
-    if(!validator.isEmail(email) || validator.isEmpty(email)){
+    if (!validator.isEmail(email) || validator.isEmpty(email)) {
       setError("Please enter a valid email address!");
       return;
     }
 
-    if(validator.isEmpty(password,{ignore_whitespace:false}) ){
+    if (validator.isEmpty(password, { ignore_whitespace: false })) {
       setError("Please enter a valid password!");
       return;
     }
@@ -33,61 +32,69 @@ const Login = ({setCurrPage}) => {
 
     //api fetching
     try {
-      const response = await axiosInstance.post(API_PATHS.AUTH.LOGIN,{
-        email,password
+      const response = await axiosInstance.post(API_PATHS.AUTH.LOGIN, {
+        email,
+        password,
       });
 
-      const {token} = response.data;
-      if(token){
+      const { token } = response.data;
+      if (token) {
         localStorage.setItem("token", token);
         updateUser(response.data);
-        navigate("/");
+        navigate("/dashboard");
       }
     } catch (error) {
-      if(error.response && error.response.data.message){
+      if (error.response && error.response.data.message) {
         setError(error.response.data.message);
-      }else{
+      } else {
         setError("Something went wrong");
       }
     }
-    
-  }
-
+  };
 
   return (
-    <div className='w-[90vw] md:w-[33vw] p-7 flex flex-col justify-center'>
-      <h3 className='text-lg font-semibold text-black'>Welcome Back</h3>
-      <p className='txt-xs text-slate-700 mt-[5px] mb-6'>Enter details to log in</p>
+    <div className="w-[90vw] md:w-[33vw] p-7 flex flex-col justify-center">
+      <h3 className="text-lg font-semibold text-black">Welcome Back</h3>
+      <p className="txt-xs text-slate-700 mt-[5px] mb-6">
+        Enter details to log in
+      </p>
 
       <form onSubmit={handleLogin}>
         <Input
-        value={email}
-        onChange={({target})=>setEmail(target.value)}
-        label="Email Address"
-        placeholder="abc@mail.com"
-        type="text"
+          value={email}
+          onChange={({ target }) => setEmail(target.value)}
+          label="Email Address"
+          placeholder="abc@mail.com"
+          type="text"
         />
         <Input
-        value={password}
-        onChange={({target})=>setPassword(target.value)}
-        label="Password"
-        placeholder="Min 6 Characters"
-        type="password"
+          value={password}
+          onChange={({ target }) => setPassword(target.value)}
+          label="Password"
+          placeholder="Min 6 Characters"
+          type="password"
         />
 
-        {error && <p className='text-red-500 text-xs pb-2.5'>{error}</p>}
-        <button type='submit' className='btn-primary'>LOGIN</button>
+        {error && <p className="text-red-500 text-xs pb-2.5">{error}</p>}
+        <button type="submit" className="btn-primary">
+          LOGIN
+        </button>
 
-        <p className='text-[13px] text-slate-800 mt-3'>Don't have an account?{" "}
-          <button className='font-medium text-primary underline cursor-pointer' onClick={()=>{
-            setCurrPage("signup");
-          }}>Signup</button>
+        <p className="text-[13px] text-slate-800 mt-3">
+          Don't have an account?{" "}
+          <button
+          type="button"
+            className="font-medium text-primary underline cursor-pointer"
+            onClick={() => {
+              setCurrPage("signup");
+            }}
+          >
+            Signup
+          </button>
         </p>
-        
-
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;
