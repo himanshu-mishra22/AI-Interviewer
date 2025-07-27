@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import Input from "../../components/inputs/Input";
+import SpinnerLoader from "../../components/loader/SpinnerLoader";
+import axiosInstance from "../../utils/axiosInstance";
+import { API_PATHS } from "../../utils/apiPaths";
 
 const CreateSessionForm = () => {
   const [formData, setFormData ] = useState({
@@ -30,6 +33,34 @@ const CreateSessionForm = () => {
       return;
     }
     setError("");
+    setIsLoading(true);
+
+    try {
+      const aiResponse = await axiosInstance.post(API_PATHS.AI.GENERATE_QUESTIONS,{
+        role,experience,topicsToFocus,numberOfQuestions:10
+      })
+
+      const generateQuestions = aiResponse.data;
+      const response = await axiosInstance.post(API_PATHS.SESSION.CREATE,{
+        ...formData,
+        questions:generateQuestions,
+      });
+
+      if(response.data?.session?._id){
+        navigate(`/interview/${response.data?.session?._id}`);
+      }
+    } catch (error) {
+      // console.log(error);
+      if(error.response && error.response.data.message){
+        setError(error.response.data.message)
+      }else{
+        setError("Something went wrong");
+      }
+      
+    }
+    finally{
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -77,7 +108,8 @@ const CreateSessionForm = () => {
             className="btn-primary w-full mt-2"
             disabled={isLoading}
         >
-            Create Session
+            {isLoading && <SpinnerLoader/>} Create
+
         </button>
       </form>
     </div>

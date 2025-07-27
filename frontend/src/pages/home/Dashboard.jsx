@@ -54,7 +54,7 @@ const Dashboard = () => {
                   ? moment(data.updatedAt).format("DD MM YYYY")
                   : ""
               }
-              onSelect={() => navigate(`/interview-prep/${data?._id}`)}
+              onSelect={() => navigate(`/interview/${data?._id}`)}
               onDelete={() => setOpenDeleteAlert({ open: true, data })}
             />
             
