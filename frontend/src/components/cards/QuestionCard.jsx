@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { LuChevronDown, LuPin,LuPinOff, LuSparkles } from "react-icons/lu";
 import { contains } from "validator";
+import AiResponsePreview from "../../pages/InterviewPrep/components/AiResponsePreview";
 
 const QuestionCard = ({
   question,
@@ -67,7 +68,9 @@ const QuestionCard = ({
         </div>
 
         <div className="overflow-hidden transition-all durationn-300 ease-in-out" style={{maxHeight: `${height}px`}}>
-                <div ref={contentRef} className="mt-4 text-gray700 bg-gray-50 px-5 py-3 rounded-lg"></div>
+                <div ref={contentRef} className="mt-4 text-gray700 bg-gray-50 px-5 py-3 rounded-lg">
+                    <AiResponsePreview content={answer} />
+                </div>
         </div>
     </div>
   </>
