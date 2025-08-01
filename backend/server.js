@@ -11,13 +11,12 @@ const { generateInterviewQuestions, generateExplanation } = require('./controlle
 
 const app = express();
 
-app.use(
-    cors({
-        origin:process.env.FRONTEND,
-        methods:["GET","POST", "PUT", "DELETE"],
-        allowedHeaders:["Content-Type", "Authorization"],
-    })
-);
+app.use(cors({
+    origin:process.env.FRONTEND,
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true
+}));
 
 app.use(express.json());
 connectDB();
