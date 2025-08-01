@@ -23,17 +23,6 @@
 
 ---
 
-## Table of Contents
-
-- [Overview](#overview)
-- [Getting Started](#getting-started)
-  - [Prerequisites](#prerequisites)
-  - [Installation](#installation)
-  - [Usage](#usage)
-  - [Testing](#testing)
-
----
-
 ## Overview
 
 **AI-Interviewer** is an all-in-one developer tool designed to enhance interview preparation through AI-powered question generation, explanations, and personalized session management. 
